@@ -1,35 +1,28 @@
 const db = require('../../db/conexao-async');
 
 const getAll = () => {
-    const valor = db.execute(
-        'SELECT * FROM logins'
-        )
+    return db.execute('SELECT * FROM logins')
         .then((result) => result)
-        .catch((err) => [])
-
-    return valor;
+        .catch((err) => err)
 } 
 
 const create = async(nickname, senha) => {
-    const [{ insertId }] = await db.execute(
-        `INSERT INTO logins (nickname, senha) VALUES ('${nickname}', '${senha}')`
-    );
+    const sql = "INSERT INTO logins (nickname, senha) VALUES (?, ?);"
+    const values = [nickname, senha]
+    const [{ insertId }] = await db.execute(sql, values)
 
-    return insertId;
+    return insertId
 }
 
 const deleteLogin = async(id) => {
-    return await db.execute(
-        `DELETE FROM logins WHERE id = '${id}'`
-    );
+    const sql = "DELETE FROM logins WHERE id = ?;"
+    return await db.execute(sql, [id])
 }
 
 const update = async(nickname, senha, id) => {
-    const editar = await db.execute(
-        `UPDATE logins SET nickname = ${nickname}, senha = ${senha} WHERE id = ${id}`
-    );
-
-    return editar;
+    const sql = "UPDATE logins SET nickname = ?, senha = ? WHERE id = ?;"
+    const values = [nickname, senha, id]
+    return await db.execute(sql, values)
 }
 
 module.exports = {

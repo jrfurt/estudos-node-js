@@ -1,4 +1,3 @@
-const db = require('../../db/conexao');
 const usuariosModel = require('../models/usuariosModel');
 
 // READ
@@ -25,7 +24,6 @@ const deleteUsuario = (req, res) => {
     usuariosModel.deleteLogin(id)
         .then(() => res.status(200).json({ message: "Usuario deletado com sucesso" }))
         .catch((err) => res.status(500).json({ message: err }))
-    // return res.status(200).json({ message: "Usuario deletado com sucesso" });
 }
 
 // UPDATE
