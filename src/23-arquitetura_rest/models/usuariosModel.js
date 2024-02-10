@@ -14,15 +14,15 @@ const create = async(nickname, senha) => {
     return insertId
 }
 
-const deleteLogin = async(id) => {
+const deleteLogin = (id) => {
     const sql = "DELETE FROM logins WHERE id = ?;"
-    return await db.execute(sql, [id])
+    return db.execute(sql, [id])
 }
 
-const update = async(nickname, senha, id) => {
+const update = (nickname, senha, id) => {
     const sql = "UPDATE logins SET nickname = ?, senha = ? WHERE id = ?;"
     const values = [nickname, senha, id]
-    return await db.execute(sql, values)
+    return db.execute(sql, values)
 }
 
 module.exports = {

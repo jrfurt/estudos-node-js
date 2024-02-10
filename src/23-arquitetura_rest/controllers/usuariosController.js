@@ -27,12 +27,18 @@ const deleteUsuario = (req, res) => {
 }
 
 // UPDATE
-const editUsuario = async(req, res) => {
+const editUsuario = (req, res) => {
     const { nickname, senha } = req.body;
     const { id } = req.params;
 
-    await usuariosModel.update(nickname, senha, id);
-    return res.status(204);
+    usuariosModel.update(nickname, senha, id)
+        .then(() => {
+            return res.status(200).json({ message: "Dados atualizados com sucesso" })
+        }) 
+        .catch(() => {
+            return res.status(500).json({ erro: "Occorreu um erro ao atualizar login" })
+        })
+    
 }
 
 module.exports = {
